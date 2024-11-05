@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import jakarta.validation.Valid;
 import vn.hoidanit.jobhunter.domain.Job;
 import vn.hoidanit.jobhunter.domain.Resume;
 import vn.hoidanit.jobhunter.domain.User;
@@ -90,6 +89,10 @@ public class ResumeService {
         res.setCreatedBy(resume.getCreatedBy());
         res.setUpdatedAt(resume.getUpdatedAt());
         res.setCreatedBy(resume.getCreatedBy());
+        
+        if(resume.getJob() != null){
+            res.setCompanyName(resume.getJob().getCompany().getName());
+        }
 
         res.setUser(new ResFetchResumeDTO.UserResume(resume.getUser().getId(), resume.getUser().getName()));
         res.setJob(new ResFetchResumeDTO.JobResume(resume.getJob().getId(), resume.getJob().getName()));

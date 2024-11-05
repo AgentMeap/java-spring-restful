@@ -40,7 +40,8 @@ public class JobController {
     @PostMapping("/jobs")
     @ApiMessage("create a job")
     public ResponseEntity<ResCreateJobDTO> createJob(@Valid @RequestBody Job job){
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.jobService.handleCreateJob(job));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(this.jobService.handleCreateJob(job));
     }
 
     @PutMapping("/jobs")
@@ -50,7 +51,7 @@ public class JobController {
         if(!currentJob.isPresent()){
             throw new IdInvalidException("Job not found");
         }
-        return ResponseEntity.ok().body(this.jobService.handleUpdateJob(job));
+        return ResponseEntity.ok().body(this.jobService.handleUpdateJob(job, currentJob.get()));
     }
 
     @DeleteMapping("/jobs/{id}")
@@ -79,7 +80,8 @@ public class JobController {
     @GetMapping("/jobs")
     @ApiMessage("fetch all jobs")
     public ResponseEntity<ResultPaginationDTO> getAllUser(
-        @Filter Specification<Job> spec, Pageable pageable) {
+        @Filter Specification<Job> spec, 
+        Pageable pageable) {
     
         return ResponseEntity.status(HttpStatus.OK).body(this.jobService.fetchAllJob(spec, pageable));
     }
